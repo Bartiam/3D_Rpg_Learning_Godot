@@ -43,8 +43,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Jump") and is_on_floor():
 		velocity.y = JumpVelocity
 	
-	var InputDir: Vector2 = Input.get_vector("Move_Left", "Move_Right", "Move_Forward", "Move_Backward")
-	var Direction: Vector3 = (transform.basis * Vector3(InputDir.x, 0, InputDir.y)).normalized()
+	var Direction: Vector3 = GetMovementDirections()
 	
 	if (Direction):
 		velocity.x = Direction.x * MovementSpeed
@@ -56,7 +55,10 @@ func _physics_process(delta: float) -> void:
 	frame_camera_rotation(delta)
 	move_and_slide()
 
-
+func GetMovementDirections() -> Vector3:
+	var InputDir: Vector2 = Input.get_vector("Move_Left", "Move_Right", "Move_Forward", "Move_Backward")
+	var Direction: Vector3 = (transform.basis * Vector3(InputDir.x, 0, InputDir.y)).normalized()
+	return Direction
 
 func frame_camera_rotation(DeltaTime: float) -> void:
 	HorisontalPivot.rotate_y(LookingCharacter.x * MouseSensitivity)
