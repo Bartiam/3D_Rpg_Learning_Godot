@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://dmgk321hfeoi8"]
+[gd_scene load_steps=11 format=3 uid="uid://dmgk321hfeoi8"]
 
 [ext_resource type="PackedScene" uid="uid://d00poh1qkqwf5" path="res://Characters/Players/Character_Base.tscn" id="1_rdtea"]
 [ext_resource type="PackedScene" uid="uid://brgv2nhrrhfft" path="res://Assets/Environment/Rock_Cliff_Env_03.glb" id="2_8m33b"]
 [ext_resource type="PackedScene" uid="uid://bxqg8mfglsc0s" path="res://Assets/Environment/Topiary_Tree_Vege_01.glb" id="3_obos6"]
 [ext_resource type="PackedScene" uid="uid://cghnbvxec8the" path="res://Assets/Environment/Bush_Vege_2.glb" id="4_wy0yp"]
 [ext_resource type="PackedScene" uid="uid://ch8ni302tful5" path="res://Assets/Environment/Tree_Group_Vege.glb" id="5_hg312"]
+[ext_resource type="PackedScene" uid="uid://dl07swcyvvipc" path="res://FPS_Monitor.tscn" id="6_holtw"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8u4o7"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -207,3 +208,10 @@ transform = Transform3D(-0.866025, 2.58096e-08, -0.5, 2.98023e-08, 1, 1.64674e-1
 
 [node name="Tree_Group_Vege2" parent="Vegetation" instance=ExtResource("5_hg312")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 12)
+
+[node name="FPS_Monitor" parent="." instance=ExtResource("6_holtw")]
+offset_left = -4.0
+offset_top = -3.0
+offset_right = -968.0
+offset_bottom = -519.0
+color = Color(1, 1, 1, 0)

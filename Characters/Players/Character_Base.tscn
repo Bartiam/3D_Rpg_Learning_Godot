@@ -1,10 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://d00poh1qkqwf5"]
 
 [ext_resource type="Script" uid="uid://depgvboxwxm8j" path="res://Characters/Players/Character_Base.gd" id="1_8csi7"]
+[ext_resource type="PackedScene" uid="uid://b3tlagt4bytaq" path="res://Characters/Players/rig.tscn" id="2_f041e"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1hec8"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_1hec8"]
+height = 1.82491
 
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_tycnk"]
 
@@ -13,9 +13,6 @@ script = ExtResource("1_8csi7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_1hec8")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_1hec8")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 0, 0)
@@ -27,3 +24,9 @@ spring_length = 2.0
 [node name="HorisontalPivot" type="Node3D" parent="."]
 
 [node name="VerticalPivot" type="Node3D" parent="HorisontalPivot"]
+
+[node name="RigPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12272, 0)
+
+[node name="Rig" parent="RigPivot" instance=ExtResource("2_f041e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.03148, 0)
