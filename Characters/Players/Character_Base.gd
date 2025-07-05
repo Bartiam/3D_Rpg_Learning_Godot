@@ -31,7 +31,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		if event is InputEventMouseMotion:
 			LookingCharacter = -event.relative * MouseSensitivity
-			print(LookingCharacter)
 
 
 
@@ -55,10 +54,14 @@ func _physics_process(delta: float) -> void:
 	frame_camera_rotation(delta)
 	move_and_slide()
 
+
+
 func GetMovementDirections() -> Vector3:
 	var InputDir: Vector2 = Input.get_vector("Move_Left", "Move_Right", "Move_Forward", "Move_Backward")
-	var Direction: Vector3 = (transform.basis * Vector3(InputDir.x, 0, InputDir.y)).normalized()
-	return Direction
+	var InputVector: Vector3 = Vector3(InputDir.x, 0, InputDir.y).normalized()
+	return HorisontalPivot.global_transform.basis * InputVector
+
+
 
 func frame_camera_rotation(DeltaTime: float) -> void:
 	HorisontalPivot.rotate_y(LookingCharacter.x * MouseSensitivity)
