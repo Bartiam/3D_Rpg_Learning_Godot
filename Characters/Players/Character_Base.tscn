@@ -15,5 +15,11 @@ shape = SubResource("CapsuleShape3D_1hec8")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_1hec8")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.311, 1, 2)
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+spring_length = 2.0
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+
+[node name="HorisontalPivot" type="Node3D" parent="."]
+
+[node name="VerticalPivot" type="Node3D" parent="HorisontalPivot"]
