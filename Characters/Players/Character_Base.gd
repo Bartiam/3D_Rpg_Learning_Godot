@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+class_name Player
+
 # Variables #
 @export_category("Character Specifications")
 @export var MovementSpeed: float = 0.0
