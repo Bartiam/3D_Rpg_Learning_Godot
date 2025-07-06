@@ -17,6 +17,7 @@ var LookingCharacter: Vector2 = Vector2.ZERO
 @onready var HorisontalPivot: Node3D = $HorisontalPivot
 @onready var VerticalPivot: Node3D = $HorisontalPivot/VerticalPivot
 @onready var RigPivot: Node3D = $RigPivot
+@onready var rig: Node3D = $RigPivot/Rig
 # Variables #
 
 # Functions #
@@ -45,6 +46,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = JumpVelocity
 	
 	var Direction: Vector3 = GetMovementDirections()
+	rig.UpdateAnimationTree(Direction)
 	
 	if (Direction):
 		velocity.x = Direction.x * MovementSpeed
