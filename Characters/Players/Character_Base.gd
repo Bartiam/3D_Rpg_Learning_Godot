@@ -21,6 +21,8 @@ var attack_direction: Vector3 = Vector3.ZERO
 @onready var VerticalPivot: Node3D = $HorisontalPivot/VerticalPivot
 @onready var RigPivot: Node3D = $RigPivot
 @onready var rig: Node3D = $RigPivot/Rig
+@onready var attack_cast: RayCast3D = %AttackCast
+
 # Variables #
 
 # Functions #
@@ -47,25 +49,16 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	frame_camera_rotation(delta)
 	
+	var direction: Vector3 = GetMovementDirection()
+	rig.UpdateAnimationTree(direction)
+	
+	handle_idle_physics_frame(delta, direction)
+	handle_slashing_physics_frame(delta)
+	
 	# add gravity to the character
 	if not is_on_floor():
 		velocity.y -= Gravity * delta
 	
-	if Input.is_action_just_pressed("Jump") and is_on_floor():
-		velocity.y = JumpVelocity
-	
-	var Direction: Vector3 = GetMovementDirection()
-	rig.UpdateAnimationTree(Direction)
-	
-	if (Direction):
-		velocity.x = Direction.x * MovementSpeed
-		velocity.z = Direction.z * MovementSpeed
-		LookTowardDirection(Direction, delta)
-	else:
-		velocity.x = move_toward(velocity.x, 0, MovementSpeed)
-		velocity.z = move_toward(velocity.z, 0, MovementSpeed)
-	
-	handle_slashing_physics_frame(delta)
 	move_and_slide()
 
 
@@ -108,6 +101,22 @@ func slash_attack() -> void:
 	
 	if attack_direction.is_zero_approx():
 		attack_direction = rig.global_basis * Vector3(0, 0, 1)
+	
+	attack_cast.clear_exceptions()
+
+
+
+func handle_idle_physics_frame(delta: float, direction: Vector3) -> void:
+	if not rig.is_idle():
+		return
+		
+	if (direction):
+		velocity.x = direction.x * MovementSpeed
+		velocity.z = direction.z * MovementSpeed
+		LookTowardDirection(direction, delta)
+	else:
+		velocity.x = move_toward(velocity.x, 0, MovementSpeed)
+		velocity.z = move_toward(velocity.z, 0, MovementSpeed)
 
 
 
@@ -119,3 +128,5 @@ func handle_slashing_physics_frame(delta: float) -> void:
 	velocity.z = attack_direction.z * attack_move_speed
 	
 	LookTowardDirection(attack_direction, delta)
+	
+	attack_cast.deal_damage()

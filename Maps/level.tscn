@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dmgk321hfeoi8"]
+[gd_scene load_steps=12 format=3 uid="uid://dmgk321hfeoi8"]
 
 [ext_resource type="PackedScene" uid="uid://d00poh1qkqwf5" path="res://Characters/Players/Character_Base.tscn" id="1_rdtea"]
 [ext_resource type="PackedScene" uid="uid://brgv2nhrrhfft" path="res://Assets/Environment/Rock_Cliff_Env_03.glb" id="2_8m33b"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cghnbvxec8the" path="res://Assets/Environment/Bush_Vege_2.glb" id="4_wy0yp"]
 [ext_resource type="PackedScene" uid="uid://ch8ni302tful5" path="res://Assets/Environment/Tree_Group_Vege.glb" id="5_hg312"]
 [ext_resource type="PackedScene" uid="uid://dl07swcyvvipc" path="res://FPS_Monitor.tscn" id="6_holtw"]
+[ext_resource type="PackedScene" uid="uid://bgnsh65i6hipk" path="res://Characters/Enemies/enemy.tscn" id="7_ypo1f"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8u4o7"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -216,3 +217,17 @@ offset_top = -3.0
 offset_right = -968.0
 offset_bottom = -519.0
 color = Color(1, 1, 1, 0)
+
+[node name="Enemies" type="Node3D" parent="."]
+
+[node name="Enemy" parent="Enemies" instance=ExtResource("7_ypo1f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 1, -6)
+
+[node name="Enemy2" parent="Enemies" instance=ExtResource("7_ypo1f")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -14, 1, -13)
+
+[node name="Enemy3" parent="Enemies" instance=ExtResource("7_ypo1f")]
+transform = Transform3D(0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, -10, 1, -13)
+
+[node name="Enemy4" parent="Enemies" instance=ExtResource("7_ypo1f")]
+transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, -10, 1, -9)
