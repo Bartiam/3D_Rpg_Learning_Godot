@@ -8,11 +8,14 @@ extends CharacterBody3D
 @export var MinBoundary: float = -60.0
 @export var MaxBoundary: float = 10.0
 @export var AnimationDecay: float = 20.0
+@export var attack_move_speed: float = 3.0
 
 var Gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 # Stores the x/y directions the player is trying to look in
 var LookingCharacter: Vector2 = Vector2.ZERO
+
+var attack_direction: Vector3 = Vector3.ZERO
 
 @onready var HorisontalPivot: Node3D = $HorisontalPivot
 @onready var VerticalPivot: Node3D = $HorisontalPivot/VerticalPivot
@@ -34,10 +37,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		if event is InputEventMouseMotion:
 			LookingCharacter = -event.relative * MouseSensitivity
+	
+	if rig.is_idle():
+		if event.is_action_pressed("Attack"):
+			slash_attack()
 
 
 
 func _physics_process(delta: float) -> void:
+	frame_camera_rotation(delta)
+	
 	# add gravity to the character
 	if not is_on_floor():
 		velocity.y -= Gravity * delta
@@ -45,7 +54,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Jump") and is_on_floor():
 		velocity.y = JumpVelocity
 	
-	var Direction: Vector3 = GetMovementDirections()
+	var Direction: Vector3 = GetMovementDirection()
 	rig.UpdateAnimationTree(Direction)
 	
 	if (Direction):
@@ -56,12 +65,12 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, MovementSpeed)
 		velocity.z = move_toward(velocity.z, 0, MovementSpeed)
 	
-	frame_camera_rotation(delta)
+	handle_slashing_physics_frame(delta)
 	move_and_slide()
 
 
 
-func GetMovementDirections() -> Vector3:
+func GetMovementDirection() -> Vector3:
 	var InputDir: Vector2 = Input.get_vector("Move_Left", "Move_Right", "Move_Forward", "Move_Backward")
 	var InputVector: Vector3 = Vector3(InputDir.x, 0, InputDir.y).normalized()
 	return HorisontalPivot.global_transform.basis * InputVector
@@ -87,5 +96,26 @@ func LookTowardDirection(Direction: Vector3, DeltaTime: float) -> void:
 		RigPivot.global_position + Direction, Vector3.UP, true
 	)
 	RigPivot.global_transform = RigPivot.global_transform.interpolate_with(
-		TargetTransform, 1 - exp(-AnimationDecay * DeltaTime)
+		TargetTransform, 
+		1.0 - exp(-AnimationDecay * DeltaTime)
 	)
+
+
+
+func slash_attack() -> void:
+	rig.travel("Slash")
+	attack_direction = GetMovementDirection()
+	
+	if attack_direction.is_zero_approx():
+		attack_direction = rig.global_basis * Vector3(0, 0, 1)
+
+
+
+func handle_slashing_physics_frame(delta: float) -> void:
+	if not rig.is_slashing():
+		return
+	
+	velocity.x = attack_direction.x * attack_move_speed
+	velocity.z = attack_direction.z * attack_move_speed
+	
+	LookTowardDirection(attack_direction, delta)

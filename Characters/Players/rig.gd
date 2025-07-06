@@ -1,12 +1,39 @@
 extends Node3D
 
-@onready var animation_tree: AnimationTree = $AnimationTree
+@export var animation_speed: float = 10.0
 
-var BlendSpaceMovement_Path: String = "parameters/Movement/blend_position"
+@onready var animation_tree: AnimationTree = $AnimationTree
+@onready var playback: AnimationNodeStateMachinePlayback = animation_tree["parameters/playback"]
+
+var run_path: String = "parameters/Movement/blend_position"
+var run_weight_target := -1.0
+
+
+
+func _physics_process(delta: float) -> void:
+	animation_tree[run_path] = move_toward(
+		animation_tree[run_path],
+		run_weight_target,
+		delta * animation_speed
+	)
+
 
 
 func UpdateAnimationTree(Direction: Vector3) -> void:
 	if Direction.is_zero_approx():
-		animation_tree[BlendSpaceMovement_Path] = -1.0
+		animation_tree[run_path] = -1.0
 	else:
-		animation_tree[BlendSpaceMovement_Path] = 1.0
+		animation_tree[run_path] = 1.0
+
+
+
+func travel(animation_name: String) -> void:
+	playback.travel(animation_name)
+
+
+
+func is_idle() -> bool:
+	return playback.get_current_node() == "Movement"
+
+func is_slashing() -> bool:
+	return playback.get_current_node() == "Slash"
