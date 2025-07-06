@@ -15,6 +15,7 @@ var LookingCharacter: Vector2 = Vector2.ZERO
 
 @onready var HorisontalPivot: Node3D = $HorisontalPivot
 @onready var VerticalPivot: Node3D = $HorisontalPivot/VerticalPivot
+@onready var RigPivot: Node3D = $RigPivot
 # Variables #
 
 # Functions #
@@ -47,6 +48,7 @@ func _physics_process(delta: float) -> void:
 	if (Direction):
 		velocity.x = Direction.x * MovementSpeed
 		velocity.z = Direction.z * MovementSpeed
+		LookTowardDirection(Direction, delta)
 	else:
 		velocity.x = move_toward(velocity.x, 0, MovementSpeed)
 		velocity.z = move_toward(velocity.z, 0, MovementSpeed)
@@ -74,3 +76,11 @@ func frame_camera_rotation(DeltaTime: float) -> void:
 	
 	$SpringArm3D.global_transform = VerticalPivot.global_transform
 	LookingCharacter = Vector2.ZERO
+
+
+
+func LookTowardDirection(Direction: Vector3, DeltaTime: float) -> void:
+	var TargetTransform: = RigPivot.global_transform.looking_at(
+		RigPivot.global_position + Direction, Vector3.UP, true
+	)
+	RigPivot.global_transform.basis = TargetTransform.basis
