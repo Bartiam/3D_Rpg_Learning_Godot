@@ -2,11 +2,12 @@ extends CharacterBody3D
 
 # Variables #
 @export_category("Character Specifications")
-@export var MovementSpeed: float = 0
-@export var JumpVelocity: float = 0
+@export var MovementSpeed: float = 0.0
+@export var JumpVelocity: float = 0.0
 @export var MouseSensitivity: float = 0.05
-@export var MinBoundary: float = -60
-@export var MaxBoundary: float = 10
+@export var MinBoundary: float = -60.0
+@export var MaxBoundary: float = 10.0
+@export var AnimationDecay: float = 20.0
 
 var Gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -83,4 +84,6 @@ func LookTowardDirection(Direction: Vector3, DeltaTime: float) -> void:
 	var TargetTransform: = RigPivot.global_transform.looking_at(
 		RigPivot.global_position + Direction, Vector3.UP, true
 	)
-	RigPivot.global_transform.basis = TargetTransform.basis
+	RigPivot.global_transform = RigPivot.global_transform.interpolate_with(
+		TargetTransform, 1 - exp(-AnimationDecay * DeltaTime)
+	)

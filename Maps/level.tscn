@@ -42,6 +42,7 @@ material = SubResource("StandardMaterial3D_8m33b")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 MovementSpeed = 5.0
 JumpVelocity = 5.0
+AnimationDecay = 15.0
 
 [node name="MapBoundary" type="Node3D" parent="."]
 
