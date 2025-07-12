@@ -14,6 +14,12 @@ const DECAY: float = 8.0
 @export var AnimationDecay: float = 20.0
 @export var attack_move_speed: float = 3.0
 
+# stats
+@export_category("RPG Stats")
+@export var stats: CharacterStats
+# stats
+
+
 var Gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 # Stores the x/y directions the player is trying to look in
@@ -37,6 +43,7 @@ var attack_direction: Vector3 = Vector3.ZERO
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	health_component.update_max_health(100.0)
+	print(stats.get_base_speed())
 
 
 

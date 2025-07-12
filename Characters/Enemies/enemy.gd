@@ -8,7 +8,7 @@ class_name Enemy
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 @onready var player_detecter: ShapeCast3D = $Rig/PlayerDetecter
 @onready var area_attack: ShapeCast3D = $AreaAttack
-
+@onready var player: Player = get_tree().get_first_node_in_group("Player")
 
 func _ready() -> void:
 	rig.set_active_mesh(

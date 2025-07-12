@@ -15,8 +15,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not timer.is_stopped():
 		return;
 	
+	if not player.is_physics_processing():
+		return;
+	
 	if event.is_action_pressed("Dash_Action"):
-		print("Dash button pressed")
 		direction = player.GetMovementDirection()
 		
 		if not direction.is_zero_approx():
