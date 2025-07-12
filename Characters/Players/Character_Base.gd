@@ -24,13 +24,14 @@ var attack_direction: Vector3 = Vector3.ZERO
 @onready var RigPivot: Node3D = $RigPivot
 @onready var rig: Node3D = $RigPivot/Rig
 @onready var attack_cast: RayCast3D = %AttackCast
+@onready var health_component: HealthComponent = $HealthComponent
 
 # Variables #
 
 # Functions #
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
+	health_component.update_max_health(100.0)
 
 
 
