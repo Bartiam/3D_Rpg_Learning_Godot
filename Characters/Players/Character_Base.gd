@@ -6,7 +6,6 @@ const DECAY: float = 8.0
 
 # Variables #
 @export_category("Character Specifications")
-@export var MovementSpeed: float = 0.0
 @export var JumpVelocity: float = 0.0
 @export var MouseSensitivity: float = 0.05
 @export var MinBoundary: float = -60.0
@@ -60,6 +59,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			slash_attack()
 		if event.is_action_pressed("Right_Click"):
 			rig.travel("Overhead")
+	
+	if event.is_action_pressed("debug_xp_character"):
+		stats.xp += 10000
+		
 
 
 
@@ -130,13 +133,13 @@ func handle_idle_physics_frame(delta: float, direction: Vector3) -> void:
 	
 	velocity.x = exponential_decay(
 		velocity.x,
-		direction.x * MovementSpeed,
+		direction.x * stats.get_base_speed(),
 		DECAY,
 		delta)
 	
 	velocity.z = exponential_decay(
 		velocity.z,
-		direction.z * MovementSpeed,
+		direction.z * stats.get_base_speed(),
 		DECAY,
 		delta)
 	
@@ -154,7 +157,7 @@ func handle_slashing_physics_frame(delta: float) -> void:
 	
 	LookTowardDirection(attack_direction, delta)
 	
-	attack_cast.deal_damage()
+	attack_cast.deal_damage(20.0 + stats.get_damage_modifier(), stats.get_crit_chance())
 
 
 
@@ -174,7 +177,7 @@ func _on_health_component_defeat() -> void:
 
 
 func _on_rig_heavy_attack() -> void:
-	area_attack.deal_damage(50.0)
+	area_attack.deal_damage(30.0 + stats.get_damage_modifier())
 
 
 

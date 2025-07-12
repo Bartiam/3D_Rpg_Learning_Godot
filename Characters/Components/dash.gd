@@ -33,7 +33,7 @@ func _physics_process(delta: float) -> void:
 	if direction.is_zero_approx():
 		return
 	
-	player.velocity = direction * player.MovementSpeed * speed_multiplier
+	player.velocity = direction * player.stats.get_base_speed() * speed_multiplier
 	
 	time_remaining -= delta
 	

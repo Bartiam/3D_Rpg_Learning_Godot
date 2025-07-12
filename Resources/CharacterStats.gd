@@ -17,14 +17,23 @@ class Ability:
 	func percentile_lerp(min_bound: float, max_bound: float) -> float:
 		return lerp(min_bound, max_bound, ability_score / 100.0)
 	
-	func get_modifire() -> float:
+	func get_modifier() -> float:
 		return percentile_lerp(min_modifier, max_modifier)
 	
 	func increace_level() -> void:
 		ability_score += randi_range(2, 5)
 
 var level: int = 0
-var hp: float = 0.0
+var xp := 0:
+	set(value):
+		xp = value
+		
+		var boundary = percentage_level_up_boundary()
+		
+		while xp > boundary:
+			xp -= boundary
+			level_up()
+			boundary = percentage_level_up_boundary()
 
 # Damage bonus on attack
 var strength := Ability.new(2.0, 12.0)
@@ -38,13 +47,13 @@ var agility := Ability.new(0.05, 0.25)
 
 
 func get_base_speed() -> float:
-	return speed.get_modifire()
+	return speed.get_modifier()
 
-func get_base_strength() -> float:
-	return speed.get_modifire()
+func get_damage_modifier() -> float:
+	return speed.get_modifier()
 
-func get_base_agility() -> float:
-	return agility.get_modifire()
+func get_crit_chance() -> float:
+	return agility.get_modifier()
 
 func level_up() -> void:
 	level += 1
@@ -52,9 +61,10 @@ func level_up() -> void:
 	speed.increace_level()
 	endurance.increace_level()
 	agility.increace_level()
-	
-	printt(
-		strength.ability_score,
-		 agility.ability_score,
-	 	speed.ability_score,
-	 	endurance.ability_score)
+	print("level up", " ", level)
+
+func percentage_level_up_boundary() -> int:
+	return int(50 * pow(1.2, level))
+
+func cubic_level_up_boundary() -> int:
+	return int(50 + pow(level, 3))

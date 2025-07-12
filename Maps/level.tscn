@@ -41,7 +41,6 @@ material = SubResource("StandardMaterial3D_8m33b")
 
 [node name="Character" parent="." instance=ExtResource("1_rdtea")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-MovementSpeed = 5.0
 JumpVelocity = 5.0
 AnimationDecay = 15.0
 
