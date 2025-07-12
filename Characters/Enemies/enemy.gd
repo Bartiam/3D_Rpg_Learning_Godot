@@ -6,7 +6,9 @@ class_name Enemy
 @onready var rig: Node3D = $Rig
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
-@onready var player_detecter: ShapeCast3D = $PlayerDetecter
+@onready var player_detecter: ShapeCast3D = $Rig/PlayerDetecter
+@onready var area_attack: ShapeCast3D = $AreaAttack
+
 
 func _ready() -> void:
 	rig.set_active_mesh(
@@ -20,6 +22,7 @@ func _on_health_component_defeat() -> void:
 	rig.travel("Defeat")
 	collision_shape_3d.disabled = true
 	set_physics_process(false)
+	set_process(false)
 
 func _physics_process(delta: float) -> void:
 	if rig.is_idle():
@@ -34,4 +37,4 @@ func check_for_attacks() -> void:
 
 
 func _on_rig_heavy_attack() -> void:
-	print("Heavy attack signal")
+	area_attack.deal_damage(20.0)

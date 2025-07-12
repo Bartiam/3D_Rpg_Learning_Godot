@@ -53,6 +53,8 @@ func set_active_mesh(active_mesh: MeshInstance3D) -> void:
 		child.visible = false
 	active_mesh.visible = true
 
+func is_overhead() -> bool:
+	return playback.get_current_node() == "Overhead"
 
 func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "Overhead":
