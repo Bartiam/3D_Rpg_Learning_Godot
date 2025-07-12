@@ -46,6 +46,9 @@ func is_idle() -> bool:
 func is_slashing() -> bool:
 	return playback.get_current_node() == "Slash"
 
+func is_dashing() -> bool:
+	return playback.get_current_node() == "Dash"
+
 
 
 func set_active_mesh(active_mesh: MeshInstance3D) -> void:

@@ -2,6 +2,8 @@ extends CharacterBody3D
 
 class_name Player
 
+const DECAY: float = 8.0
+
 # Variables #
 @export_category("Character Specifications")
 @export var MovementSpeed: float = 0.0
@@ -116,16 +118,23 @@ func slash_attack() -> void:
 
 
 func handle_idle_physics_frame(delta: float, direction: Vector3) -> void:
-	if not rig.is_idle():
+	if not rig.is_idle() and not rig.is_dashing():
 		return
-		
+	
+	velocity.x = exponential_decay(
+		velocity.x,
+		direction.x * MovementSpeed,
+		DECAY,
+		delta)
+	
+	velocity.z = exponential_decay(
+		velocity.z,
+		direction.z * MovementSpeed,
+		DECAY,
+		delta)
+	
 	if (direction):
-		velocity.x = direction.x * MovementSpeed
-		velocity.z = direction.z * MovementSpeed
 		LookTowardDirection(direction, delta)
-	else:
-		velocity.x = move_toward(velocity.x, 0, MovementSpeed)
-		velocity.z = move_toward(velocity.z, 0, MovementSpeed)
 
 
 
@@ -159,3 +168,8 @@ func _on_health_component_defeat() -> void:
 
 func _on_rig_heavy_attack() -> void:
 	area_attack.deal_damage(50.0)
+
+
+
+func exponential_decay(a: float, b: float, decay: float, delta: float) -> float:
+	return b + (a - b) * exp(-decay * delta)
