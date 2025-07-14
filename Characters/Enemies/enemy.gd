@@ -3,6 +3,7 @@ class_name Enemy
 
 @export var max_health: float = 100.0
 @export var xp_value := 25
+@export var crit_rate: float = 0.05
 
 @onready var rig: Node3D = $Rig
 @onready var health_component: HealthComponent = $HealthComponent
@@ -39,4 +40,4 @@ func check_for_attacks() -> void:
 
 
 func _on_rig_heavy_attack() -> void:
-	area_attack.deal_damage(20.0)
+	area_attack.deal_damage(20.0, crit_rate)

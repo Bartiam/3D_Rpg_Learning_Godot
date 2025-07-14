@@ -177,7 +177,7 @@ func _on_health_component_defeat() -> void:
 
 
 func _on_rig_heavy_attack() -> void:
-	area_attack.deal_damage(30.0 + stats.get_damage_modifier())
+	area_attack.deal_damage(30.0 + stats.get_damage_modifier(), stats.get_crit_chance())
 
 
 

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://fhkd8hr3d0g5"]
+
+[node name="DamageNumber" type="Node3D"]
+
+[node name="Label3D" type="Label3D" parent="."]
+billboard = 1
+text = "25"
+font_size = 64
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
