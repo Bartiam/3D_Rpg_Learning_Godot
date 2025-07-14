@@ -24,7 +24,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if not direction.is_zero_approx():
 			player.rig.travel("Dash")
 			gpu_particles_3d.emitting = true
-			timer.start(1.0)
+			timer.start(player.stats.get_dash_cooldawn())
 			time_remaining = dash_duration
 
 

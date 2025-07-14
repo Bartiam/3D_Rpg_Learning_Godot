@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bxqg8mfglsc0s" path="res://Assets/Environment/Topiary_Tree_Vege_01.glb" id="3_obos6"]
 [ext_resource type="PackedScene" uid="uid://cghnbvxec8the" path="res://Assets/Environment/Bush_Vege_2.glb" id="4_wy0yp"]
 [ext_resource type="PackedScene" uid="uid://ch8ni302tful5" path="res://Assets/Environment/Tree_Group_Vege.glb" id="5_hg312"]
-[ext_resource type="PackedScene" uid="uid://dl07swcyvvipc" path="res://FPS_Monitor.tscn" id="6_holtw"]
+[ext_resource type="PackedScene" uid="uid://bxh5cuh6ycbo0" path="res://fps_monitor.tscn" id="7_ufuqe"]
 [ext_resource type="PackedScene" uid="uid://bgnsh65i6hipk" path="res://Characters/Enemies/enemy.tscn" id="7_ypo1f"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8u4o7"]
@@ -210,13 +210,6 @@ transform = Transform3D(-0.866025, 2.58096e-08, -0.5, 2.98023e-08, 1, 1.64674e-1
 [node name="Tree_Group_Vege2" parent="Vegetation" instance=ExtResource("5_hg312")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 12)
 
-[node name="FPS_Monitor" parent="." instance=ExtResource("6_holtw")]
-offset_left = -4.0
-offset_top = -3.0
-offset_right = -968.0
-offset_bottom = -519.0
-color = Color(1, 1, 1, 0)
-
 [node name="Enemies" type="Node3D" parent="."]
 
 [node name="Enemy" parent="Enemies" instance=ExtResource("7_ypo1f")]
@@ -230,3 +223,5 @@ transform = Transform3D(0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, -10, 1, -1
 
 [node name="Enemy4" parent="Enemies" instance=ExtResource("7_ypo1f")]
 transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, -10, 1, -9)
+
+[node name="FPS_Monitor" parent="." instance=ExtResource("7_ufuqe")]

@@ -34,6 +34,7 @@ var attack_direction: Vector3 = Vector3.ZERO
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 @onready var area_attack: ShapeCast3D = $AreaAttack
+@onready var user_interface: Control = $UserInterface
 
 
 # Variables #
@@ -42,13 +43,18 @@ var attack_direction: Vector3 = Vector3.ZERO
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	health_component.update_max_health(100.0)
-	print(stats.get_base_speed())
+	stats.level_up_notification.connect(
+		func(): health_component.update_max_health(stats.get_max_hp())
+	)
+	
+	stats.update_stats.connect(user_interface.update_stats_display)
+	user_interface.update_stats_display()
 
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("Cancel"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		get_tree().quit()
 	
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		if event is InputEventMouseMotion:
